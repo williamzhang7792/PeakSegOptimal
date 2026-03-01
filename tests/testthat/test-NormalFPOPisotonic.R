@@ -100,6 +100,33 @@ test_that("already isotonic data is not altered", {
                info = "isotonic data, penalty=0")
 })
 
+if(requireNamespace("fpop", quietly = TRUE)) {
+
+  test_that("matches Fpop when unconstrained solution is non-decreasing", {
+    cases <- list(
+      list(y = c(rep(2, 20), rep(5, 20), rep(10, 20)), pens = c(1, 5, 10)),
+      list(y = c(rep(0, 10), rep(3, 10), rep(7, 10), rep(15, 10)), pens = c(1, 5, 10)),
+      list(y = c(rep(1, 30), rep(8, 30)), pens = c(1, 5, 20))
+    )
+    for (cc in cases) {
+      for (pen in cc$pens) {
+        fpop_fit <- fpop::Fpop(cc$y, lambda = pen)
+        fpop_seg_means <- unique(fpop_fit$signal)
+        if (all(diff(fpop_seg_means) >= -1e-8)) {
+          iso_fit <- NormalFPOPisotonic(cc$y, penalty = pen)
+          iso_fitted <- expand_means(iso_fit, length(cc$y))
+          expect_equal(iso_fitted, as.numeric(fpop_fit$signal),
+                       tolerance = 1e-5,
+                       info = paste("n =", length(cc$y), "pen =", pen))
+        }
+      }
+    }
+  })
+
+} else {
+  message("fpop not installed, skipping Fpop comparison tests")
+}
+
 test_that("penalty=0 matches isoreg on 200 random trials (N=10)", {
   set.seed(20260222)
   n_fail <- 0L
