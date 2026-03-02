@@ -1,7 +1,13 @@
-PoissonFPOPunconstrained <- function
+PoissonFPOPunconstrained <- structure(function
+### Unconstrained optimal changepoint detection using the Poisson loss
+### and the FPOP algorithm. Unlike PeakSegFPOP, there is no up-down
+### constraint on segment means.
 (count.vec,
+### integer vector of non-negative count data to segment.
  weight.vec=rep(1, length(count.vec)),
+### numeric vector (same length as count.vec) of positive weights.
  penalty=NULL
+### non-negative numeric scalar: penalty for each changepoint.
 ){
   n.data <- length(count.vec)
   stopifnot(2 <= n.data)
@@ -36,4 +42,7 @@ PoissonFPOPunconstrained <- function
   result.list$seg.end <- seg.end + 1L
   result.list$n.segments <- n.segments
   result.list
-}
+### List with seg.mean (chronological segment means), seg.end
+### (1-indexed segment ends), n.segments, cost.vec, end.vec,
+### mean.vec, intervals.vec.
+})

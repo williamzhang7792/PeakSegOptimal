@@ -33,10 +33,13 @@ int PoissonFPOPunconstrainedLog
     cost = &cost_model_mat[data_i];
     cum_weight_i += weight_vec[data_i];
     if(data_i==0){
+      // C_1(m) = gamma_1(m)/w_1
       cost->piece_list.emplace_back(
         1.0, -data_vec[0], 0.0,
         min_log_mean, max_log_mean, -1, INFINITY);
     }else{
+      // C_t(m) = (gamma_t + w_{1:t-1} * M_t(m)) / w_{1:t}, where
+      // M_t(m) = min{ C_{t-1}(m), min_m' C_{t-1}(m') + lambda/w_{1:t-1} }
       min_prev_cost.set_to_unconstrained_min_of(cost_prev);
       min_prev_cost.set_prev_seg_end(data_i-1);
       min_prev_cost.add(0.0, 0.0, penalty/cum_weight_prev_i);

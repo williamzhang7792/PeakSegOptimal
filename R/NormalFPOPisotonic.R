@@ -1,6 +1,11 @@
-NormalFPOPisotonic <- function
+NormalFPOPisotonic <- structure(function
+### Regularized isotonic regression using the Normal (squared-error)
+### loss. With penalty=0 this gives the same result as isoreg (PAVA).
 (data.vec,
+### numeric vector of data to segment.
  penalty=NULL
+### non-negative numeric scalar: penalty for each changepoint.
+### Use penalty=0 for unpenalized isotonic regression.
 ){
   n.data <- length(data.vec)
   stopifnot(2 <= n.data)
@@ -30,4 +35,7 @@ NormalFPOPisotonic <- function
   result.list$seg.end <- seg.end + 1L
   result.list$n.segments <- n.segments
   result.list
-}
+### List with seg.mean (chronological, non-decreasing segment means),
+### seg.end (1-indexed segment ends), n.segments, cost.vec, end.vec,
+### mean.vec, intervals.vec.
+})

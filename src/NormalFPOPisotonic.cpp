@@ -5,12 +5,12 @@
 #include <list>
 #include <vector>
 
+#include "funPieceListLog.h"
 #include "LossPiece.h"
 #include "NormalFPOPisotonic.h"
 
 #define EPSILON 1e-12
 #define ABS(x) ((x)<0 ? -(x) : (x))
-#define ERROR_MIN_MAX_SAME 1
 
 class NormalLossPiece : public LossPiece {
 public:
@@ -568,10 +568,13 @@ int NormalFPOPisotonic
     double y = data_vec[data_i];
 
     if(data_i == 0){
+      // C_1(m) = (m - y_1)^2 = m^2 - 2*y_1*m + y_1^2
       cost->piece_list.emplace_back(
         1.0, -2.0*y, y*y,
         min_mean, max_mean, -1, INFINITY);
     }else{
+      // C_t(m) = (m - y_t)^2 + min{ C_{t-1}(m), C^{<=}_{t-1}(m) + lambda }
+      // where C^{<=} enforces the non-decreasing (isotonic) constraint.
       min_prev_cost.set_to_min_less_of(cost_prev);
       min_prev_cost.set_prev_seg_end(data_i - 1);
       min_prev_cost.add(0.0, 0.0, penalty);

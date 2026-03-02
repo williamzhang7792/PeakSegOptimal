@@ -1,4 +1,5 @@
 library(testthat)
+context("PoissonFPOPunconstrained")
 library(PeakSegOptimal)
 
 select_segmentor_model <- function(seg, penalty) {

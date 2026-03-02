@@ -1,4 +1,5 @@
 library(testthat)
+context("NormalFPOPisotonic")
 library(PeakSegOptimal)
 
 expand_means <- function(result, n) {
