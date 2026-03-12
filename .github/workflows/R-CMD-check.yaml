@@ -40,10 +40,11 @@ jobs:
             any::testthat
             github::cran/Segmentor3IsBack
             any::fpop
+            any::PeakSegDP
 
       - uses: r-lib/actions/check-r-package@v2
         with:
-          args: 'c("--no-manual", "--no-examples")'
+          args: 'c("--no-manual")'
 
       - name: Show testthat output
         if: always()
