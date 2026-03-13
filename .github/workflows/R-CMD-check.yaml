@@ -40,7 +40,6 @@ jobs:
             any::testthat
             github::cran/Segmentor3IsBack
             any::fpop
-            any::PeakSegDP
 
       - uses: r-lib/actions/check-r-package@v2
         with:
