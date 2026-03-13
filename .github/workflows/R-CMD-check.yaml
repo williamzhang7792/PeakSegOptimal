@@ -34,12 +34,6 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::rcmdcheck
-            any::testthat
-            github::cran/Segmentor3IsBack
-            any::fpop
 
       - uses: r-lib/actions/check-r-package@v2
         with:
