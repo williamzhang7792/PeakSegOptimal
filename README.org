@@ -6,7 +6,7 @@ PeakSegOptimal: Optimal Segmentation Subject to Up-Down Constraints
 
 Two new FPOP solvers for the Medium and Hard tests:
 
-- =PoissonFPOPunconstrained= — unconstrained optimal partitioning (Poisson loss). 2-state up/down model collapsed to 1 state, monotonicity operators replaced with =set_to_unconstrained_min_of=. Validated against =Segmentor3IsBack::Segmentor(model=1)=.
+- =PoissonFPOPunconstrained= — unconstrained optimal partitioning (Poisson loss). 2-state up/down model collapsed to 1 state, monotonicity operators replaced with =set_to_unconstrained_min_of=.
 - =NormalFPOPisotonic= — regularized isotonic regression (Normal loss). Uses =set_to_min_less_of= for non-decreasing constraint. =NormalLossPiece= inherits from a shared =LossPiece= base class alongside =PoissonLossPieceLog=. Validated against =isoreg()= (penalty=0) and =fpop::Fpop()=.
 
 *** Run the tests
@@ -29,7 +29,6 @@ test_file("tests/testthat/test-NormalFPOPisotonic.R")         ## 17 tests
 Passes =R CMD check --no-manual= with no new warnings.
 
 Optional (tests skip gracefully if missing):
-- =remotes::install_github("cran/Segmentor3IsBack")=
 - =install.packages("fpop")=
 
 *** What changed
